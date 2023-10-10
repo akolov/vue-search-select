@@ -25,44 +25,48 @@
       @keyup.enter.prevent="enterItem"
       @keydown.delete="deleteTextOrItem"
     />
-    <div
-      class="text"
-      :class="textClass" :data-vss-custom-attr="searchTextCustomAttr"
-    >{{ inputText }}
-    </div>
-    <div
-      class="menu"
-      ref="menu"
-      @mousedown.prevent
-      :class="menuClass"
-      :style="menuStyle"
-      tabindex="-1"
-    >
+    <Float placement="bottom" strategy="fixed">
       <div
-        v-for="(option, idx) in filteredOptions"
-        :key="idx"
-        class="item"
-        :class="{ 'selected': option.selected || pointer === idx, 'disabled': option.disabled }"
-        :data-vss-custom-attr="customAttrs[idx] ? customAttrs[idx] : ''"
-        @click.stop="selectItem(option)"
-        @mousedown="mousedownItem"
-        @mouseenter="pointerSet(idx)"
-      >
-        <slot :option="option" :idx="idx">
-          {{ option.text }}
-        </slot>
+        class="text"
+        :class="textClass" :data-vss-custom-attr="searchTextCustomAttr"
+      >{{ inputText }}
       </div>
-    </div>
+      <div
+        class="menu"
+        ref="menu"
+        @mousedown.prevent
+        :class="menuClass"
+        :style="menuStyle"
+        tabindex="-1"
+      >
+        <div
+          v-for="(option, idx) in filteredOptions"
+          :key="idx"
+          class="item"
+          :class="{ 'selected': option.selected || pointer === idx, 'disabled': option.disabled }"
+          :data-vss-custom-attr="customAttrs[idx] ? customAttrs[idx] : ''"
+          @click.stop="selectItem(option)"
+          @mousedown="mousedownItem"
+          @mouseenter="pointerSet(idx)"
+        >
+          <slot :option="option" :idx="idx">
+            {{ option.text }}
+          </slot>
+        </div>
+      </div>
+    </Float>
   </div>
 </template>
 
 <script>
 import common from "./common.js"
 import { commonMixin } from "./mixins/index.js"
+import { Float } from "@headlessui-float/vue"
 
 export default {
   name: "ModelSelect",
   mixins: [commonMixin],
+  components: [Float],
   emits: ["blur", "searchchange", "update:modelValue"],
   props: {
     modelValue: {
