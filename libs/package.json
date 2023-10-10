@@ -32,5 +32,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/moreta/vue-search-select.git"
+  },
+  "dependencies": {
+    "@headlessui-float/vue": "^0.11.4",
+    "@headlessui/vue": "^1.7.16"
   }
 }
